@@ -1,7 +1,10 @@
 package com.springcloud.study.system.biz.service.dept;
 
+import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
 import com.springcloud.study.system.biz.dto.dept.SaveDeptDTO;
 import com.springcloud.study.system.biz.dto.dept.UpdateDTO;
+
+import java.util.List;
 
 /**
  * 部门服务
@@ -25,5 +28,13 @@ public interface SysDeptService {
      * @param updateDTO 用户信息
      */
     void updateDept(UpdateDTO updateDTO);
+
+
+    /**
+     * 返回部门树信息
+     *
+     * @return 部门树
+     */
+    List<DeptTreeBO> deptTrees();
 
 }

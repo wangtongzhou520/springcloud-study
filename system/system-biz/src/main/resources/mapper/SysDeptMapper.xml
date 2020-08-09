@@ -39,5 +39,11 @@
         and name=#{name}
     </select>
 
+    <select id="queryAllDept" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dept
+    </select>
+
 
 </mapper>
