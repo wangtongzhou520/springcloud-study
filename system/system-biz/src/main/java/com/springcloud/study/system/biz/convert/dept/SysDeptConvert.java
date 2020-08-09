@@ -3,6 +3,7 @@ package com.springcloud.study.system.biz.convert.dept;
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
 import com.springcloud.study.system.biz.bo.dept.QueryDeptBO;
 import com.springcloud.study.system.biz.dto.dept.SaveDeptDTO;
+import com.springcloud.study.system.biz.dto.dept.UpdateDeptDTO;
 import com.springcloud.study.system.biz.entity.dept.SysDeptDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
@@ -47,4 +48,13 @@ public interface SysDeptConvert {
      * @return deptTreeBOList
      */
     List<DeptTreeBO> convert(List<SysDeptDO> deptDOList);
+
+    /**
+     * updateDeptDTO convert sysDeptDO
+     *
+     * @param updateDeptDTO updateDeptDTO
+     * @return sysDeptDO
+     */
+    @Mappings({})
+    SysDeptDO convert(UpdateDeptDTO updateDeptDTO);
 }

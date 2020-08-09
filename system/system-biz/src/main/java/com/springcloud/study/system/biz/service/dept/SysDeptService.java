@@ -1,8 +1,10 @@
 package com.springcloud.study.system.biz.service.dept;
 
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
+import com.springcloud.study.system.biz.bo.dept.QueryDeptBO;
 import com.springcloud.study.system.biz.dto.dept.SaveDeptDTO;
-import com.springcloud.study.system.biz.dto.dept.UpdateDTO;
+import com.springcloud.study.system.biz.dto.dept.UpdateDeptDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,9 +27,9 @@ public interface SysDeptService {
     /**
      * 更新用户信息
      *
-     * @param updateDTO 用户信息
+     * @param updateDeptDTO 用户信息
      */
-    void updateDept(UpdateDTO updateDTO);
+    void updateDept(UpdateDeptDTO updateDeptDTO);
 
 
     /**
@@ -36,5 +38,4 @@ public interface SysDeptService {
      * @return 部门树
      */
     List<DeptTreeBO> deptTrees();
-
 }

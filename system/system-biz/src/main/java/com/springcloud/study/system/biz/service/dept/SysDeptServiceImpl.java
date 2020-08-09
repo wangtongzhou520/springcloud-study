@@ -1,22 +1,19 @@
 package com.springcloud.study.system.biz.service.dept;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.springcloud.study.common.core.constant.CommonConstant;
 import com.springcloud.study.common.core.exception.ServerException;
 import com.springcloud.study.common.core.util.ParamValidatorUtil;
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
-import com.springcloud.study.system.biz.bo.dept.QueryDeptBO;
 import com.springcloud.study.system.biz.convert.dept.SysDeptConvert;
 import com.springcloud.study.system.biz.dao.dept.SysDeptMapper;
 import com.springcloud.study.system.biz.dto.dept.SaveDeptDTO;
-import com.springcloud.study.system.biz.dto.dept.UpdateDTO;
+import com.springcloud.study.system.biz.dto.dept.UpdateDeptDTO;
 import com.springcloud.study.system.biz.entity.dept.SysDeptDO;
 import com.springcloud.study.system.biz.util.LevelUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,16 +62,62 @@ public class SysDeptServiceImpl implements SysDeptService {
     }
 
     @Override
-    public void updateDept(UpdateDTO updateDTO) {
-        ParamValidatorUtil.check(updateDTO);
+    @Transactional(rollbackFor = Exception.class)
+    public void updateDept(UpdateDeptDTO updateDeptDTO) {
+        ParamValidatorUtil.check(updateDeptDTO);
         //检查传入的部门id是否存在
-        SysDeptDO sysDeptDO = sysDeptMapper.selectById(updateDTO.getId());
-        Preconditions.checkNotNull(sysDeptDO, "待更新的部门信息不存在");
+        SysDeptDO before =
+                sysDeptMapper.selectById(updateDeptDTO.getId());
+        Preconditions.checkNotNull(before, "待更新的部门信息不存在");
         //检查同一层级下面是否存在相同的部门
-
+        if (checkExist(updateDeptDTO.getParentId(), updateDeptDTO.getName())) {
+            throw new ServerException(CommonConstant.P_EXCEPTION_CODE,
+                    "同一层级下存在相同的部门名称");
+        }
+        //组合do
+        SysDeptDO after = SysDeptConvert.INSTANCE.convert(updateDeptDTO);
+        String level = LevelUtil.calculateLevel(
+                queryLevelById(updateDeptDTO.getParentId()),
+                updateDeptDTO.getParentId());
+        after.setLevel(level)
+                .setCreateOperator("")
+                .setModifiedOperator("")
+                .setModifiedOperatorIp("")
+                .setGmtCreate(new Date())
+                .setGmtModified(new Date());
         //更新部门信息
-
+        updateWithChild(before, after);
     }
+
+    /**
+     * 更新自己和自己下级信息
+     *
+     * @param before before
+     * @param after  after
+     */
+    private void updateWithChild(SysDeptDO before, SysDeptDO after) {
+        //判断下级部门信息是否需要更新
+        String beforeLevel = before.getLevel();
+        String afterLevel = after.getLevel();
+        if (!beforeLevel.equals(afterLevel)) {
+            //查询部门登记查询下级信息
+            List<SysDeptDO> sysDeptDoList =
+                    sysDeptMapper.queryChildDeptByLevel(beforeLevel);
+            if (CollectionUtils.isNotEmpty(sysDeptDoList)) {
+                sysDeptDoList.stream().forEach(sysDeptDO -> {
+                    String level = sysDeptDO.getLevel();
+                    if (level.indexOf(beforeLevel) == 0) {
+                        level = afterLevel + level.substring(beforeLevel.length());
+                        sysDeptDO.setLevel(level);
+                    }
+                });
+                sysDeptMapper.batchUpdateLevel(sysDeptDoList);
+            }
+        }
+        //更新自己
+        sysDeptMapper.updateById(after);
+    }
+
 
     @Override
     public List<DeptTreeBO> deptTrees() {
@@ -83,7 +126,7 @@ public class SysDeptServiceImpl implements SysDeptService {
         List<DeptTreeBO> deptBoList =
                 SysDeptConvert.INSTANCE.convert(allDeptList);
         //递归生成树
-        return null;
+        return deptBoListConvertDeptTree(deptBoList);
     }
 
     /**
@@ -119,8 +162,8 @@ public class SysDeptServiceImpl implements SysDeptService {
      * 递归获取树的信息
      *
      * @param deptTreeBoList 树的列表
-     * @param level      层级
-     * @param multimap   层级和
+     * @param level          层级
+     * @param multimap       层级和
      */
     private void transformDeptTree(List<DeptTreeBO> deptTreeBoList,
                                    String level,

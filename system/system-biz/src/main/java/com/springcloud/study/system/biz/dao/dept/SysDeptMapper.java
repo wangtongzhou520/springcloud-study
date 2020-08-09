@@ -31,4 +31,21 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
      * @return 部门信息
      */
     List<SysDeptDO> queryAllDept();
+
+
+    /**
+     * 根据level查询下级信息
+     *
+     * @param level
+     * @return 部门信息
+     */
+    List<SysDeptDO> queryChildDeptByLevel(@Param("level") String level);
+
+
+    /**
+     * 批量更新部门level信息
+     *
+     * @param sysDeptDoList
+     */
+    void batchUpdateLevel(List<SysDeptDO> sysDeptDoList);
 }

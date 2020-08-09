@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-public class UpdateDTO implements Serializable {
+public class UpdateDeptDTO implements Serializable {
     /**
      * 部门id
      */

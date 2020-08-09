@@ -45,5 +45,19 @@
         from sys_dept
     </select>
 
+    <select id="queryChildDeptByLevel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dept
+        where level like #{level} || '.%'
+    </select>
+
+    <update id="batchUpdateLevel" parameterType="map">
+        <foreach collection="list" item="item" separator=";">
+            update sys_dept
+            set level=#{item.level}
+            where id=#{item.id}
+        </foreach>
+    </update>
 
 </mapper>
