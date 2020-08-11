@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.springcloud.study.common.core.constant.CommonConstant;
+import com.springcloud.study.common.core.exception.BusinessException;
 import com.springcloud.study.common.core.exception.ServerException;
 import com.springcloud.study.common.core.util.ParamValidatorUtil;
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.ArrayListMultimap.*;
+import static com.google.common.collect.ArrayListMultimap.create;
 
 /**
  * 部门服务
@@ -127,6 +128,20 @@ public class SysDeptServiceImpl implements SysDeptService {
                 SysDeptConvert.INSTANCE.convert(allDeptList);
         //递归生成树
         return deptBoListConvertDeptTree(deptBoList);
+    }
+
+    @Override
+    public void delDeptById(Integer id) {
+        //查询部门是否存在
+        SysDeptDO deptDO = sysDeptMapper.selectById(id);
+        Preconditions.checkNotNull(deptDO, "当前部门不存在,无法删除");
+        //检查该部门下面是否存在子部门
+        if (sysDeptMapper.countByParentId(id) > 0) {
+            throw new BusinessException("当前部门下面还存在子部门");
+        }
+        //检查该部门下是否还存在用户信息
+        //TODO 待用户信息完善时候在补充
+        sysDeptMapper.deleteById(id);
     }
 
     /**

@@ -18,7 +18,7 @@ import java.util.List;
 public class DeptTreeBO extends QueryDeptBO {
 
     /**
-     * 下一层级数
+     * 下一层级列表
      */
-    List<DeptTreeBO> deptTreeBOList;
+    private List<DeptTreeBO> deptTreeBOList;
 }

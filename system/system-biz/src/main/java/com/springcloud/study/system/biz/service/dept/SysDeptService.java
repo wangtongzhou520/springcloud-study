@@ -1,10 +1,8 @@
 package com.springcloud.study.system.biz.service.dept;
 
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
-import com.springcloud.study.system.biz.bo.dept.QueryDeptBO;
 import com.springcloud.study.system.biz.dto.dept.SaveDeptDTO;
 import com.springcloud.study.system.biz.dto.dept.UpdateDeptDTO;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -38,4 +36,11 @@ public interface SysDeptService {
      * @return 部门树
      */
     List<DeptTreeBO> deptTrees();
+
+    /**
+     * 删除部门信息
+     *
+     * @param id deptId
+     */
+    void delDeptById(Integer id);
 }

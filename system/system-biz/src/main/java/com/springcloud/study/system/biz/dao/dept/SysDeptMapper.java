@@ -48,4 +48,13 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
      * @param sysDeptDoList
      */
     void batchUpdateLevel(List<SysDeptDO> sysDeptDoList);
+
+    /**
+     * 根据父级id求总数
+     *
+     * @param parentId parentId
+     * @return count
+     */
+    int countByParentId(@Param("parentId") Integer parentId);
+
 }

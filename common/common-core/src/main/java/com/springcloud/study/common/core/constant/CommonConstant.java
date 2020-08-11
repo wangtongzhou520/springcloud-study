@@ -11,5 +11,5 @@ public class CommonConstant {
     /**
      * 参数异常 code
      */
-    public static final String P_EXCEPTION_CODE = "P_EXCEPTION_CODE";
+    public static final String P_PARAM_CODE = "P_PARAM_CODE";
 }
