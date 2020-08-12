@@ -18,5 +18,5 @@ public class DeptTreeVO extends QueryDeptVO {
     /**
      * 下一层级列表
      */
-    private List<QueryDeptVO> deptTreeBOList;
+    private List<DeptTreeVO> deptTreeBOList;
 }

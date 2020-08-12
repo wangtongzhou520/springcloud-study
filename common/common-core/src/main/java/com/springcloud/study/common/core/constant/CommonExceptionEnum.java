@@ -15,7 +15,13 @@ public enum CommonExceptionEnum {
     /**
      * 系统未授权
      */
-    S_UNAUTHORIZED("S_UNAUTHORIZED", "系统未授权");
+    S_UNAUTHORIZED("S_UNAUTHORIZED", "系统未授权"),
+
+    /**
+     * 参数异常
+     */
+    P_PARAM("P_PARAM", "参数异常");
+
 
 
     private String code;

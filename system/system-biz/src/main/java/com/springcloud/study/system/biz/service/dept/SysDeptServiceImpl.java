@@ -3,9 +3,7 @@ package com.springcloud.study.system.biz.service.dept;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.springcloud.study.common.core.constant.CommonConstant;
 import com.springcloud.study.common.core.exception.BusinessException;
-import com.springcloud.study.common.core.exception.ServerException;
 import com.springcloud.study.common.core.util.ParamValidatorUtil;
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
 import com.springcloud.study.system.biz.convert.dept.SysDeptConvert;
@@ -41,12 +39,9 @@ public class SysDeptServiceImpl implements SysDeptService {
 
     @Override
     public void saveDept(SaveDeptDTO saveDeptDTO) {
-        //参数校验
-        ParamValidatorUtil.check(saveDeptDTO);
         //判断同一层级下面是否包含相同的部门名称
         if (checkExist(saveDeptDTO.getParentId(), saveDeptDTO.getName())) {
-            throw new ServerException(CommonConstant.P_EXCEPTION_CODE,
-                    "同一层级下存在相同的部门名称");
+            throw new BusinessException("同一层级下存在相同的部门名称");
         }
         //参数转换
         SysDeptDO sysDeptDO = SysDeptConvert.INSTANCE.convert(saveDeptDTO);
@@ -72,8 +67,7 @@ public class SysDeptServiceImpl implements SysDeptService {
         Preconditions.checkNotNull(before, "待更新的部门信息不存在");
         //检查同一层级下面是否存在相同的部门
         if (checkExist(updateDeptDTO.getParentId(), updateDeptDTO.getName())) {
-            throw new ServerException(CommonConstant.P_EXCEPTION_CODE,
-                    "同一层级下存在相同的部门名称");
+            throw new BusinessException("同一层级下存在相同的部门名称");
         }
         //组合do
         SysDeptDO after = SysDeptConvert.INSTANCE.convert(updateDeptDTO);

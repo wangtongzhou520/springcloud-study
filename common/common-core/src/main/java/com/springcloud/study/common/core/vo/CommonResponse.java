@@ -36,6 +36,11 @@ public class CommonResponse<T> implements Serializable {
      */
     private Boolean state;
 
+    /**
+     * 错误明细
+     */
+    private String detailMessage;
+
 
     /**
      * 成功
@@ -72,11 +77,26 @@ public class CommonResponse<T> implements Serializable {
      * @return 返回信息
      */
     public static <T> CommonResponse<T> error(String code, String message) {
+        return error(code, message, null);
+    }
+
+    /**
+     * 错误
+     *
+     * @param code          自定义code
+     * @param message       自定义返回信息
+     * @param detailMessage 错误详情信息
+     * @param <T>           泛型
+     * @return 返回错误信息
+     */
+    public static <T> CommonResponse<T> error(String code, String message,
+                                              String detailMessage) {
         CommonResponse<T> response = new CommonResponse<T>();
         response.code = code;
         response.data = null;
         response.message = message;
         response.state = false;
+        response.detailMessage = detailMessage;
         return response;
     }
 
@@ -113,6 +133,15 @@ public class CommonResponse<T> implements Serializable {
 
     public CommonResponse<T> setCode(String code) {
         this.code = code;
+        return this;
+    }
+
+    public String getDetailMessage() {
+        return detailMessage;
+    }
+
+    public CommonResponse<T> setDetailMessage(String detailMessage) {
+        this.detailMessage = detailMessage;
         return this;
     }
 }

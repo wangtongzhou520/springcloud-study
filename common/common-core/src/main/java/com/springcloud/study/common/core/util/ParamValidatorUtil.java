@@ -3,7 +3,7 @@ package com.springcloud.study.common.core.util;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.springcloud.study.common.core.constant.CommonConstant;
+import com.springcloud.study.common.core.constant.CommonExceptionEnum;
 import com.springcloud.study.common.core.exception.ServerException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -92,8 +92,7 @@ public class ParamValidatorUtil {
     public static void check(Object params) {
         Map<String, String> errors = validateObject(params);
         if (MapUtils.isNotEmpty(errors)) {
-            throw new ServerException(CommonConstant.P_EXCEPTION_CODE,
-                    errors.toString());
+            throw new ServerException(CommonExceptionEnum.P_PARAM);
         }
     }
 }

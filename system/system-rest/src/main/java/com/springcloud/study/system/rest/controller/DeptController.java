@@ -11,6 +11,7 @@ import com.springcloud.study.system.rest.vo.dept.DeptTreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class DeptController {
      */
     @PostMapping("/save")
     @ApiOperation("添加部门信息")
-    public CommonResponse<?> saveDept(@RequestBody SaveDeptRequest saveDeptRequest) {
+    public CommonResponse<?> saveDept(@RequestBody @Validated SaveDeptRequest saveDeptRequest) {
         SaveDeptDTO deptDTO = SysDeptRequestConvert.INSTANCE.convert(saveDeptRequest);
         sysDeptService.saveDept(deptDTO);
         return CommonResponse.ok();

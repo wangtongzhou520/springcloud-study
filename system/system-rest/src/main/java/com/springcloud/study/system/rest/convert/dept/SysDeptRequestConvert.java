@@ -1,11 +1,13 @@
 package com.springcloud.study.system.rest.convert.dept;
 
 import com.springcloud.study.system.biz.bo.dept.DeptTreeBO;
+import com.springcloud.study.system.biz.bo.dept.QueryDeptBO;
 import com.springcloud.study.system.biz.dto.dept.SaveDeptDTO;
 import com.springcloud.study.system.biz.dto.dept.UpdateDeptDTO;
 import com.springcloud.study.system.rest.request.dept.SaveDeptRequest;
 import com.springcloud.study.system.rest.request.dept.UpdateDeptRequest;
 import com.springcloud.study.system.rest.vo.dept.DeptTreeVO;
+import com.springcloud.study.system.rest.vo.dept.QueryDeptVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
@@ -57,4 +59,22 @@ public interface SysDeptRequestConvert {
      * @return deptTreeVoList
      */
     List<DeptTreeVO> convert(List<DeptTreeBO> deptTreeBoList);
+
+    /**
+     * queryDeptBO convert queryDeptVO
+     *
+     * @param queryDeptBO queryDeptVO
+     * @return queryDeptBO
+     */
+    @Mappings({})
+    QueryDeptVO convert(QueryDeptBO queryDeptBO);
+
+
+    /**
+     * queryDeptBoList convert queryDeptVoList
+     *
+     * @param queryDeptBoList queryDeptBoList
+     * @return queryDeptVoList
+     */
+    List<QueryDeptVO> convertVo(List<QueryDeptBO> queryDeptBoList);
 }
