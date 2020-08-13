@@ -1,4 +1,4 @@
-package com.springcloud.study.system.biz.entity;
+package com.springcloud.study.system.biz.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.springcloud.study.entity.BaseDO;
