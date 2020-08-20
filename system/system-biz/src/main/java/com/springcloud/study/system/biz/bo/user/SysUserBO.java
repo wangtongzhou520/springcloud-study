@@ -1,22 +1,19 @@
-package com.springcloud.study.system.biz.entity.user;
+package com.springcloud.study.system.biz.bo.user;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.springcloud.study.entity.BaseDO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
- * 用户类
+ * 用户展示信息
  *
  * @author wangtongzhou
- * @since 2020-05-31 16:12
+ * @since 2020-08-19 10:16
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName(value = "sys_user")
-public class SysUserDO extends BaseDO {
+public class SysUserBO {
     /**
      * 用户id
      */
@@ -45,7 +42,7 @@ public class SysUserDO extends BaseDO {
     /**
      * 用户所在部门的id
      */
-    private Integer deptId;
+    private Integer deptName;
 
     /**
      * 状态，1：正常，0：冻结状态，2：删除
@@ -71,4 +68,14 @@ public class SysUserDO extends BaseDO {
      * 更新操作者的ip地址
      */
     private String modifiedOperatorIp;
+
+    /**
+     * 创建时间
+     */
+    private Date gmtCreate;
+
+    /**
+     * 更新时间
+     */
+    private Date gmtModified;
 }

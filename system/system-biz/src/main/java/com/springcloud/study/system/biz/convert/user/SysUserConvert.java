@@ -1,5 +1,6 @@
 package com.springcloud.study.system.biz.convert.user;
 
+import com.springcloud.study.system.biz.bo.user.SysUserBO;
 import com.springcloud.study.system.biz.dto.user.SaveUserDTO;
 import com.springcloud.study.system.biz.dto.user.UpdateUserDTO;
 import com.springcloud.study.system.biz.entity.user.SysUserDO;
@@ -34,4 +35,12 @@ public interface SysUserConvert {
      * @return sysUserDO
      */
     SysUserDO convert(UpdateUserDTO updateUserDTO);
+
+    /**
+     * 用户信息
+     *
+     * @param sysUserDO sysUserDO
+     * @return sysUserBO
+     */
+    SysUserBO convert(SysUserDO sysUserDO);
 }

@@ -20,9 +20,12 @@ public enum CommonExceptionEnum {
     /**
      * 参数异常
      */
-    P_PARAM("P_PARAM", "参数异常");
+    P_PARAM("P_PARAM", "参数异常"),
 
-
+    /**
+     * 登录异常
+     */
+    B_LOGIN("B_LOGIN","登录异常");
 
     private String code;
 

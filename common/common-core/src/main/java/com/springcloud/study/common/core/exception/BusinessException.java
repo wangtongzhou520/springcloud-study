@@ -1,7 +1,5 @@
 package com.springcloud.study.common.core.exception;
 
-import java.util.HashMap;
-
 /**
  * 业务异常
  *
