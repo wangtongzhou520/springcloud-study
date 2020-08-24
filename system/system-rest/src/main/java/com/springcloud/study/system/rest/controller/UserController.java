@@ -76,8 +76,7 @@ public class UserController {
      */
     @PostMapping("/login")
     @ApiOperation("登录")
-    public CommonResponse<?> login(@RequestBody String userName,
-                                   @RequestBody String passWord) {
+    public CommonResponse<?> login(String userName, String passWord) {
         SysUserBO sysUserBO = sysUserService.querySysByUserName(userName);
         if (Objects.isNull(sysUserBO)) {
             throw new BusinessException("查询不到指定用户");
@@ -88,5 +87,17 @@ public class UserController {
         } else {
             return CommonResponse.ok();
         }
+    }
+
+    /**
+     * 登出
+     *
+     * @param userName 用户名
+     * @return
+     */
+    @PostMapping("/login")
+    @ApiOperation("登录")
+    public CommonResponse<?> loginOut(@RequestBody String userName) {
+        return CommonResponse.ok();
     }
 }
