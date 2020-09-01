@@ -1,9 +1,12 @@
 package com.springcloud.study.system.biz.dao.user;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.springcloud.study.common.core.vo.PageParam;
 import com.springcloud.study.system.biz.entity.user.SysUserDO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * user mapper
@@ -41,4 +44,21 @@ public interface SysUserMapper extends BaseMapper<SysUserDO> {
     int countByTelephone(@Param("telephone") String telephone,
                          @Param("id") Integer id);
 
+    /**
+     * 根据部门名称分页查询用户信息
+     *
+     * @param deptId    deptId
+     * @param pageParam pageParam
+     * @return 用户信息
+     */
+    List<SysUserDO> queryPageByDeptId(@Param("deptId") String deptId,
+                                      @Param("pageParam") PageParam pageParam);
+
+    /**
+     * 根据部门查询总条数
+     *
+     * @param deptId deptId
+     * @return 用户信息
+     */
+    int countByDeptId(@Param("deptId") String deptId);
 }

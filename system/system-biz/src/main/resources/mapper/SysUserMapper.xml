@@ -64,4 +64,25 @@
             and id=#{id}
         </if>
     </select>
+
+    <select id="queryPageByDeptId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where 1=1
+        <if test="deptId !=null">
+            and dept_id=#{deptId}
+        </if>
+        limit #{pageParam.offset}, #{pageParam.pageSize}
+    </select>
+
+    <select id="countByDeptId" resultType="java.lang.Integer">
+        select
+        count (1)
+        from sys_user
+        where 1=1
+        <if test="deptId !=null">
+            and dept_id=#{deptId}
+        </if>
+    </select>
 </mapper>

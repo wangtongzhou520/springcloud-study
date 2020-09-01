@@ -18,6 +18,11 @@ public class PageParam {
      */
     private Integer pageSize;
 
+    /**
+     * 偏移量
+     */
+    private Integer offset;
+
 
     public Integer getPageNo() {
         return pageNo;
@@ -34,6 +39,15 @@ public class PageParam {
 
     public PageParam setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+        return this;
+    }
+
+    public Integer getOffset() {
+        return (pageNo - 1) * pageSize;
+    }
+
+    public PageParam setOffset(Integer offset) {
+        this.offset = offset;
         return this;
     }
 }

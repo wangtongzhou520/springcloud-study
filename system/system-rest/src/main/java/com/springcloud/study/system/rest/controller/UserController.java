@@ -1,8 +1,12 @@
 package com.springcloud.study.system.rest.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import com.springcloud.study.common.core.exception.BusinessException;
 import com.springcloud.study.common.core.util.MD5Util;
 import com.springcloud.study.common.core.vo.CommonResponse;
+import com.springcloud.study.common.core.vo.PageParam;
+import com.springcloud.study.common.core.vo.PageResponse;
 import com.springcloud.study.system.biz.bo.user.SysUserBO;
 import com.springcloud.study.system.biz.constant.SysUserStateEnum;
 import com.springcloud.study.system.biz.dto.user.SaveUserDTO;
@@ -11,16 +15,14 @@ import com.springcloud.study.system.biz.service.user.SysUserService;
 import com.springcloud.study.system.rest.convert.dept.SysUserRequestConvert;
 import com.springcloud.study.system.rest.request.user.SaveUserRequest;
 import com.springcloud.study.system.rest.request.user.UpdateUserRequest;
+import com.springcloud.study.system.rest.vo.user.SysUserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,7 +45,7 @@ public class UserController {
      * @param saveUserRequest saveUserRequest
      * @return true or false
      */
-    @PostMapping("/save")
+    @PostMapping("/users")
     @ApiOperation("添加用户信息")
     public CommonResponse<?> saveUser(@RequestBody @Validated SaveUserRequest saveUserRequest) {
         SaveUserDTO saveUserDTO =
@@ -58,7 +60,7 @@ public class UserController {
      * @param updateUserRequest updateUserRequest
      * @return true or false
      */
-    @PostMapping("/update")
+    @PutMapping("/users")
     @ApiOperation("添加用户信息")
     public CommonResponse<?> updateUser(@RequestBody @Validated UpdateUserRequest updateUserRequest) {
         UpdateUserDTO updateUserDTO =
@@ -74,9 +76,10 @@ public class UserController {
      * @param passWord passWord
      * @return true or false
      */
-    @PostMapping("/login")
+    @GetMapping("/users/{userName}/{passWord}")
     @ApiOperation("登录")
-    public CommonResponse<?> login(String userName, String passWord) {
+    public CommonResponse<?> login(@PathVariable("userName") String userName,
+                                   @PathVariable("passWord") String passWord) {
         SysUserBO sysUserBO = sysUserService.querySysByUserName(userName);
         if (Objects.isNull(sysUserBO)) {
             throw new BusinessException("查询不到指定用户");
@@ -95,9 +98,32 @@ public class UserController {
      * @param userName 用户名
      * @return
      */
-    @PostMapping("/login")
+    @GetMapping("/users/{userName}")
     @ApiOperation("登录")
-    public CommonResponse<?> loginOut(@RequestBody String userName) {
+    public CommonResponse<?> loginOut(@PathVariable("userName") String userName) {
         return CommonResponse.ok();
+    }
+
+    /**
+     * 分页查询用户信息
+     *
+     * @param deptId    deptId
+     * @param pageParam 分页参数
+     * @return 分页用户信息
+     */
+    @GetMapping("/users/{deptId}/{pageParam}")
+    public CommonResponse<PageResponse<SysUserVO>> queryPage(@PathVariable String deptId,
+                                                             @PathVariable PageParam pageParam) {
+        int total = sysUserService.countSysUsersByDeptId(deptId);
+        List<SysUserVO> sysUserVOList = Lists.newArrayList();
+        if (total > 0) {
+            List<SysUserBO> sysUserBOList =
+                    sysUserService.querySysUsersByDeptId(deptId, pageParam);
+            sysUserVOList =
+                    SysUserRequestConvert.INSTANCE.convert(sysUserBOList);
+        }
+        PageResponse<SysUserVO> response =
+                PageResponse.pageResponse(sysUserVOList, total);
+        return CommonResponse.ok(response);
     }
 }

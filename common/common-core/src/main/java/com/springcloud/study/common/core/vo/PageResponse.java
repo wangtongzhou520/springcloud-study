@@ -19,7 +19,7 @@ public class PageResponse<T> implements Serializable {
     /**
      * 总量
      */
-    private Long total;
+    private Integer total;
 
     public List<T> getList() {
         return list;
@@ -30,12 +30,27 @@ public class PageResponse<T> implements Serializable {
         return this;
     }
 
-    public Long getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public PageResponse<T> setTotal(Long total) {
+    public PageResponse<T> setTotal(Integer total) {
         this.total = total;
         return this;
+    }
+
+    /**
+     * 分页信息
+     *
+     * @param list  分页
+     * @param total 总数
+     * @param <T>
+     * @return 分页信息
+     */
+    public static <T> PageResponse<T> pageResponse(List<T> list, int total) {
+        PageResponse<T> pageResponse = new PageResponse<>();
+        pageResponse.setList(list);
+        pageResponse.setTotal(total);
+        return pageResponse;
     }
 }

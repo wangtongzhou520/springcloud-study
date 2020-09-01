@@ -3,6 +3,8 @@ package com.springcloud.study.system.biz.service.user;
 import com.google.common.base.Preconditions;
 import com.springcloud.study.common.core.exception.BusinessException;
 import com.springcloud.study.common.core.util.MD5Util;
+import com.springcloud.study.common.core.vo.PageParam;
+import com.springcloud.study.common.core.vo.PageResponse;
 import com.springcloud.study.system.biz.bo.user.SysUserBO;
 import com.springcloud.study.system.biz.convert.user.SysUserConvert;
 import com.springcloud.study.system.biz.dao.user.SysUserMapper;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户实现类
@@ -66,6 +69,21 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUserBO querySysByUserName(String userName) {
         SysUserDO sysUserDO = sysUserMapper.querySysByUserName(userName);
         return SysUserConvert.INSTANCE.convert(sysUserDO);
+    }
+
+    @Override
+    public List<SysUserBO> querySysUsersByDeptId(String deptId,
+                                                 PageParam pageParam) {
+        List<SysUserDO> sysUserDOList =
+                sysUserMapper.queryPageByDeptId(deptId, pageParam);
+        List<SysUserBO> sysUserBOList =
+                SysUserConvert.INSTANCE.convert(sysUserDOList);
+        return sysUserBOList;
+    }
+
+    @Override
+    public int countSysUsersByDeptId(String deptId) {
+        return sysUserMapper.countByDeptId(deptId);
     }
 
     private boolean checkEmailExist(String mail, Integer id) {
