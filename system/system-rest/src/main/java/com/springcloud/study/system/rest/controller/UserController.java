@@ -1,6 +1,5 @@
 package com.springcloud.study.system.rest.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.springcloud.study.common.core.exception.BusinessException;
 import com.springcloud.study.common.core.util.MD5Util;
