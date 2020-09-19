@@ -1,6 +1,6 @@
 package com.springcloud.study.web.handler;
 
-import com.springcloud.study.common.core.constant.CommonExceptionEnum;
+import com.springcloud.study.common.core.constant.ExceptionCode;
 import com.springcloud.study.common.core.exception.BusinessException;
 import com.springcloud.study.common.core.exception.ServerException;
 import com.springcloud.study.common.core.vo.CommonResponse;
@@ -33,7 +33,7 @@ public class CommonExceptionHandler {
     public CommonResponse methodArgumentTypeMismatchExceptionHandler(MethodArgumentNotValidException ex) {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         assert fieldError != null;
-        return CommonResponse.error(CommonExceptionEnum.P_PARAM.getCode(),
+        return CommonResponse.error(ExceptionCode.P_PARAM.getCode(),
                 fieldError.getDefaultMessage(),
                 ExceptionUtils.getRootCauseMessage(ex));
     }

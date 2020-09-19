@@ -1,6 +1,6 @@
 package com.springcloud.study.common.core.exception;
 
-import com.springcloud.study.common.core.constant.CommonExceptionEnum;
+import com.springcloud.study.common.core.constant.ExceptionCode;
 
 /**
  * 服务端异常
@@ -25,9 +25,9 @@ public class ServerException extends RuntimeException {
         this.message = message;
     }
 
-    public ServerException(CommonExceptionEnum commonExceptionEnum) {
-        this.code = commonExceptionEnum.getCode();
-        this.message = commonExceptionEnum.getMessage();
+    public ServerException(ExceptionCode exceptionCode) {
+        this.code = exceptionCode.getCode();
+        this.message = exceptionCode.getMessage();
     }
 
 
