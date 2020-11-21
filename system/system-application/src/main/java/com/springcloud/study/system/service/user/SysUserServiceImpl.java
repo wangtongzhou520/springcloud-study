@@ -34,7 +34,7 @@ public class SysUserServiceImpl implements SysUserService {
             throw new BusinessException("电话已被占用");
         }
         if (checkEmailExist(saveUserDTO.getMail(), saveUserDTO.getId())) {
-            throw new BusinessException("邮箱已经被占用    ");
+            throw new BusinessException("邮箱已经被占用");
         }
         String encryptedPassword = MD5Util.encrypt("123456");
         SysUserDO sysUserDO = SysUserConvert.INSTANCE.convert(saveUserDTO);

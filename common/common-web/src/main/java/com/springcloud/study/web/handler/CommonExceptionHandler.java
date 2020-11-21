@@ -29,14 +29,14 @@ public class CommonExceptionHandler {
      * @param ex 参数异常校验
      * @return 错误信息
      */
-    @ExceptionHandler({MethodArgumentNotValidException.class})
-    public CommonResponse methodArgumentTypeMismatchExceptionHandler(MethodArgumentNotValidException ex) {
-        FieldError fieldError = ex.getBindingResult().getFieldError();
-        assert fieldError != null;
-        return CommonResponse.error(ExceptionCode.P_PARAM.getCode(),
-                fieldError.getDefaultMessage(),
-                ExceptionUtils.getRootCauseMessage(ex));
-    }
+//    @ExceptionHandler({MethodArgumentNotValidException.class})
+//    public CommonResponse methodArgumentTypeMismatchExceptionHandler(MethodArgumentNotValidException ex) {
+//        FieldError fieldError = ex.getBindingResult().getFieldError();
+//        assert fieldError != null;
+//        return CommonResponse.error(ExceptionCode.P_PARAM.getCode(),
+//                fieldError.getDefaultMessage(),
+//                ExceptionUtils.getRootCauseMessage(ex));
+//    }
 
     /**
      * 业务异常

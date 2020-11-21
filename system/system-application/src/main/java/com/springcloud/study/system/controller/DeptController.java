@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2020-06-03 20:22
  */
 @RestController
-@RequestMapping("/sys/dept")
+@RequestMapping("/sys")
 @Api("部门信息")
 public class DeptController {
 
@@ -34,7 +34,7 @@ public class DeptController {
      * @param saveDeptDTO saveDeptDTO
      * @return 返回信息
      */
-    @PostMapping("/save")
+    @PostMapping("/dept")
     @ApiOperation("添加部门信息")
     public CommonResponse<?> saveDept(@RequestBody @Validated SaveDeptDTO saveDeptDTO) {
         sysDeptService.saveDept(saveDeptDTO);
@@ -47,7 +47,7 @@ public class DeptController {
      * @param updateDeptDTO updateDeptDTO
      * @return true or false
      */
-    @PostMapping("/updateDept")
+    @PutMapping("/dept")
     @ApiOperation("修改部门信息")
     public CommonResponse<?> updateDept(@RequestBody UpdateDeptDTO updateDeptDTO) {
         sysDeptService.updateDept(updateDeptDTO);
@@ -59,7 +59,7 @@ public class DeptController {
      *
      * @return 部门树
      */
-    @GetMapping("/queryDeptTree")
+    @GetMapping("/depts")
     @ApiOperation("部门树")
     public CommonResponse<List<DeptTreeVO>> queryDeptTree() {
         List<DeptTreeVO> treeVoList =
@@ -73,7 +73,7 @@ public class DeptController {
      * @param id id
      * @return true or false
      */
-    @PostMapping("/delDept")
+    @DeleteMapping("/dept")
     @ApiOperation("部门树")
     public CommonResponse<?> delDept(@RequestBody Integer id) {
         sysDeptService.delDeptById(id);

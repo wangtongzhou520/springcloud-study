@@ -45,7 +45,7 @@
 
     <select id="countByMail" resultType="java.lang.Integer">
         select
-        count (1)
+        count(1)
         from sys_user
         where
         mail=#{mail}
@@ -56,7 +56,7 @@
 
     <select id="countByTelephone" resultType="java.lang.Integer">
         select
-        count (1)
+        count(1)
         from sys_user
         where
         telephone=#{telephone}
@@ -78,7 +78,7 @@
 
     <select id="countByDeptId" resultType="java.lang.Integer">
         select
-        count (1)
+        count(1)
         from sys_user
         where 1=1
         <if test="deptId !=null">

@@ -1,13 +1,10 @@
 package com.springcloud.study.system.controller;
 
 import com.google.common.collect.Lists;
-import com.springcloud.study.common.core.exception.BusinessException;
-import com.springcloud.study.common.core.util.MD5Util;
 import com.springcloud.study.common.core.vo.CommonResponse;
 import com.springcloud.study.common.core.vo.PageParam;
 import com.springcloud.study.common.core.vo.PageResponse;
 import com.springcloud.study.system.bo.user.SysUserBO;
-import com.springcloud.study.system.constant.SysUserStateEnum;
 import com.springcloud.study.system.convert.user.SysUserConvert;
 import com.springcloud.study.system.dto.user.SaveUserDTO;
 import com.springcloud.study.system.dto.user.UpdateUserDTO;
@@ -20,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 用户相关接口
@@ -29,7 +25,7 @@ import java.util.Objects;
  * @since 2020-08-13 18:49
  */
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/sys")
 @Api("部门信息")
 public class UserController {
 
@@ -42,7 +38,7 @@ public class UserController {
      * @param saveUserDTO saveUserDTO
      * @return true or false
      */
-    @PostMapping("/users")
+    @PostMapping("/user")
     @ApiOperation("添加用户信息")
     public CommonResponse<?> saveUser(@RequestBody @Validated SaveUserDTO saveUserDTO) {
         sysUserService.saveUser(saveUserDTO);
@@ -55,7 +51,7 @@ public class UserController {
      * @param updateUserDTO updateUserDTO
      * @return true or false
      */
-    @PutMapping("/users")
+    @PutMapping("/user")
     @ApiOperation("添加用户信息")
     public CommonResponse<?> updateUser(@RequestBody @Validated UpdateUserDTO updateUserDTO) {
         sysUserService.updateUser(updateUserDTO);
@@ -63,53 +59,22 @@ public class UserController {
     }
 
     /**
-     * 登录
-     *
-     * @param userName userName
-     * @param passWord passWord
-     * @return true or false
-     */
-    @GetMapping("/users/{userName}/{passWord}")
-    @ApiOperation("登录")
-    public CommonResponse<?> login(@PathVariable("userName") String userName,
-                                   @PathVariable("passWord") String passWord) {
-        SysUserBO sysUserBO = sysUserService.querySysByUserName(userName);
-        if (Objects.isNull(sysUserBO)) {
-            throw new BusinessException("查询不到指定用户");
-        } else if (!sysUserBO.getPassword().equals(MD5Util.encrypt(passWord))) {
-            throw new BusinessException("用户名密码不正确");
-        } else if (SysUserStateEnum.FROZEN.equals(sysUserBO.getStatus())) {
-            throw new BusinessException("账户已经被冻结");
-        } else {
-            return CommonResponse.ok();
-        }
-    }
-
-    /**
-     * 登出
-     *
-     * @param userName 用户名
-     * @return
-     */
-    @GetMapping("/users/{userName}")
-    @ApiOperation("登录")
-    public CommonResponse<?> loginOut(@PathVariable("userName") String userName) {
-        return CommonResponse.ok();
-    }
-
-    /**
      * 分页查询用户信息
      *
-     * @param deptId    deptId
-     * @param pageParam 分页参数
+     * @param deptId   deptId
+     * @param pageSize pageSize
+     * @param pageNo   pageNo
      * @return 分页用户信息
      */
-    @GetMapping("/users/{deptId}/{pageParam}")
+    @GetMapping("/users/{deptId}")
+    @ApiOperation("分页查询用户信息")
     public CommonResponse<PageResponse<SysUserVO>> queryPage(@PathVariable String deptId,
-                                                             @PathVariable PageParam pageParam) {
+                                                             Integer pageSize, Integer pageNo) {
         int total = sysUserService.countSysUsersByDeptId(deptId);
         List<SysUserVO> sysUserVOList = Lists.newArrayList();
         if (total > 0) {
+            PageParam pageParam =
+                    new PageParam().setPageSize(pageSize).setPageNo(pageNo);
             List<SysUserBO> sysUserBOList =
                     sysUserService.querySysUsersByDeptId(deptId, pageParam);
             sysUserVOList =
