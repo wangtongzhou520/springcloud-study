@@ -7,6 +7,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.226.75.8:8886
+        #环境选择
+        namespace: b7d341fc-df29-45ce-b3cd-4415f66b1ee0
+  application:
+    name: system
 
 
 # Swagger 配置项
@@ -30,3 +38,7 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.springcloud.study.system.entity
+
+
+
+
