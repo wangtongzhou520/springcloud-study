@@ -14,10 +14,11 @@ import org.springframework.web.client.RestTemplate;
  * @author wangtongzhou
  * @since 2020-12-11 22:18
  */
-//@Configuration
-//public class RibbonConfig {
-//    @Bean
-//    public IRule randomRule() {
-//        return new RandomRule();
-//    }
-//}
+@Configuration
+public class RibbonConfig {
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
