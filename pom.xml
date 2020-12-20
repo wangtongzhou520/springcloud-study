@@ -37,6 +37,7 @@
         <module>order</module>
         <module>getway</module>
         <module>registry</module>
+        <module>study</module>
     </modules>
 
     <!--统一版本号管理-->
