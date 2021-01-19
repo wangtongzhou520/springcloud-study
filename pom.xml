@@ -29,6 +29,7 @@
         <java.version>1.8</java.version>
         <zuul.ratelimit>2.4.1.RELEASE</zuul.ratelimit>
         <spring-security-oauth2.version>2.3.5.RELEASE</spring-security-oauth2.version>
+        <soul.version>2.2.0</soul.version>
     </properties>
 
     <modules>
@@ -38,6 +39,7 @@
         <module>getway</module>
         <module>registry</module>
         <module>study</module>
+        <module>soul-getway</module>
     </modules>
 
     <!--统一版本号管理-->

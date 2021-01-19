@@ -8,6 +8,7 @@ import com.springcloud.study.system.service.dept.SysDeptService;
 import com.springcloud.study.system.vo.dept.DeptTreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.dromara.soul.client.springcloud.annotation.SoulSpringCloudClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sys")
 @Api("部门信息")
+@SoulSpringCloudClient(path = "/sys/**")
 public class DeptController {
 
     @Autowired

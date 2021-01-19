@@ -1,6 +1,6 @@
-
-
 spring:
+  application:
+    name: system
   # 数据源配置项
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/study_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
@@ -10,11 +10,17 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.226.75.8:8886
+        server-addr: 10.226.73.115:8886
         #环境选择
-        namespace: b7d341fc-df29-45ce-b3cd-4415f66b1ee0
-  application:
-    name: system
+        #namespace: b7d341fc-df29-45ce-b3cd-4415f66b1ee0
+
+
+soul:
+  springcloud:
+    admin-url: http://127.0.0.1:9095
+    context-path: /system-api
+    app-name: system
+
 
 
 # Swagger 配置项
